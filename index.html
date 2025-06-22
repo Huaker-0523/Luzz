@@ -28,6 +28,11 @@
 </head>
 <body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<!--   背景音乐   -->
+     <audio id="backgroundMusic" loop>
+        <!-- 替换为您的音乐文件路径 -->
+        <source src="she.mp3" type="audio/mpeg">
+    </audio>
     <script>
         // 初始化场景、相机和渲染器
         const scene = new THREE.Scene();
@@ -232,6 +237,30 @@
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
+      // 背景影月逻辑
+        // 获取音频元素
+        const audio = document.getElementById('backgroundMusic');
+        
+        // 页面加载时尝试自动播放
+        window.addEventListener('load', function() {
+            // 尝试播放音频
+            const playPromise = audio.play();
+            
+            // 处理可能出现的错误
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    console.log("自动播放失败:", error);
+                });
+            }
+        });
+        
+        // 处理浏览器自动播放策略
+        document.body.addEventListener('click', function() {
+            if (audio.paused) {
+                audio.play();
+            }
+        });
+        
     </script>
 </body>
 </html>
